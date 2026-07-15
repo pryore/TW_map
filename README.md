@@ -1,10 +1,12 @@
-# UK Sewage Map
+# We have used the UK Sewage Map to make our Windrush Map
 
 <p align="center">
   <img src="public/favicon/favicon.svg" alt="UK Sewage Map Logo" width="100" height="132">
 </p>
 
-A real-time visualization tool showing river sections affected by sewage discharges from combined sewer overflows across the UK. The application combines Event Duration Monitoring (EDM) data with a basic hydrological model to track sewage discharges downstream along non-tidal river networks.
+Here are the details on the incredible Sewage Map made by [Alex Lipp (UCL)](https://alexlipp.github.io/) and [Jonny Dawe](https://bsky.app/profile/did:plc:yxxm76jvxcsuzg6ahfjiek3y) 
+
+The Sewage Map is a real-time visualization tool showing river sections affected by sewage discharges from combined sewer overflows across the UK. The application combines Event Duration Monitoring (EDM) data with a basic hydrological model to track sewage discharges downstream along non-tidal river networks.
 
 [Live Site](https://www.sewagemap.co.uk) | [Design Files](https://www.figma.com/file/EOJLW1aVdvAh9sTzbQK1uk/App-UI?type=design&node-id=0%3A1&mode=design&t=JhhOq4y180yDKHd3-1)
 

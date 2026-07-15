@@ -6,7 +6,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './',
+  base: '/TW_map/',
   plugins: [
     react({
       jsxImportSource: '@emotion/react',

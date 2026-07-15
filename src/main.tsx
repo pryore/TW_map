@@ -3,12 +3,16 @@ import './styles/index.css';
 import '@fontsource-variable/roboto';
 
 import { createRouter, RouterProvider } from '@tanstack/react-router';
+import esriId from '@arcgis/core/identity/IdentityManager';
 import { Analytics } from '@vercel/analytics/react';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen';
+
+// Completely disable the ArcGIS sign-in popup globally
+esriId.getCredential = () => Promise.reject('ArcGIS Sign-in disabled');
 
 // Create a new router instance
 const router = createRouter({ routeTree, basepath: import.meta.env.BASE_URL });

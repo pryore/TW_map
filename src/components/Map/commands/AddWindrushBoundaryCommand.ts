@@ -28,7 +28,7 @@ export class AddWindrushBoundaryCommand implements MapCommand {
 
     constructor(private layerManagerActor: SewageMapLayerManagerActor) {
         this.layer = new GeoJSONLayer({
-            url: '/data/windrush_boundary.geojson',
+            url: `${import.meta.env.BASE_URL}data/windrush_boundary.geojson`,
             copyright: 'Windrush Catchment',
             renderer: windrushRenderer,
             id: 'windrush-catchment-boundary',

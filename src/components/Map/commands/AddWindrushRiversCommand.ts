@@ -24,7 +24,7 @@ export class AddWindrushRiversCommand implements MapCommand {
 
   constructor(private layerManagerActor: SewageMapLayerManagerActor) {
     this.layer = new GeoJSONLayer({
-      url: '/data/windrush_rivers.geojson',
+      url: `${import.meta.env.BASE_URL}data/windrush_rivers.geojson`,
       copyright: 'Cotswolds Rivers Trust',
       renderer: customRiverRenderer,
       id: 'downstream-discharge-windrush-rivers', // The prefix `downstream-discharge-` ensures it gets clipped by the boundary filter!

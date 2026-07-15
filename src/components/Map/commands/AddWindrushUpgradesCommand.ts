@@ -42,7 +42,7 @@ export class AddWindrushUpgradesCommand implements MapCommand {
 
   constructor(private layerManagerActor: SewageMapLayerManagerActor) {
     this.layer = new GeoJSONLayer({
-      url: '/data/windrush_upgrades.geojson',
+      url: `${import.meta.env.BASE_URL}data/windrush_upgrades.geojson`,
       copyright: 'Windrush Upgrades Highlight',
       renderer: upgradePointRenderer,
       id: 'windrush-upgrades-halo-layer',

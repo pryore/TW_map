@@ -10,25 +10,18 @@ const Wrapper = styled(Flex)`
   }
 `;
 
-const Image = styled.img`
-  height: 40px;
-  width: auto;
-  object-fit: contain;
-  margin-left: 4px;
-  @media (max-width: 640px) {
-    height: 32px;
-    margin-left: 0px;
+const Link = styled.a`
+  pointer-events: all;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
   }
 `;
 
-const Link = styled.a`
-  pointer-events: all;
-`;
-
 const SupporterText = styled(Text)`
-  font-size: 10px;
+  font-size: 11px;
   @media (max-width: 640px) {
-    display: none;
+    font-size: 10px;
   }
 `;
 
@@ -45,18 +38,10 @@ export function SupporterImageLink() {
       pr="3"
       style={{ backgroundColor: currentTheme === 'light' ? 'white' : 'black' }}
     >
-      <SupporterText weight="bold" color="blue">
-        Supported by:
-      </SupporterText>
-      <Link href="https://riveractionuk.com/" target="_blank" rel="noopener noreferrer">
-        <Image
-          src={
-            currentTheme === 'light'
-              ? '/images/riveraction-light.png'
-              : '/images/riveraction-dark.png'
-          }
-          alt="River Action Logo"
-        />
+      <Link href="https://github.com/JonnyDawe/UK-Sewage-Map/" target="_blank" rel="noopener noreferrer">
+        <SupporterText weight="bold" color="blue">
+          Built from SewageMap.co.uk
+        </SupporterText>
       </Link>
     </Wrapper>
   );

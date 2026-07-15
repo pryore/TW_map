@@ -7,6 +7,7 @@ import { AlertStatus, DischargeInterval } from '../../../utils/discharge/types';
 import Tabs from '../../common/Tabs/Tabs';
 import { DischargeInfoCard } from '../DischargeInfoCard/DischargeInfoCard';
 import HistoricDischarges, { HistoricOfflinePeriods } from '../DischargeTimeline/DischargeTimeline';
+import { WindrushUpgradeInfo } from '../WindrushUpgradeInfo/WindrushUpgradeInfo';
 
 const ContentWrapper = styled(Box)`
   width: 100%;
@@ -110,6 +111,9 @@ export function PopUpBody({
                     alertStatus={alertStatus}
                   ></DischargeInfoCard>
                 </ActiveDischargeContent>
+              </DataCardWrapper>
+              <DataCardWrapper>
+                <WindrushUpgradeInfo company={company} locationName={locationName} />
               </DataCardWrapper>
             </Tabs.Content>
             <Tabs.Content value="history">

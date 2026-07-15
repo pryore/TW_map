@@ -12,6 +12,8 @@ import { AddRiverDischargeCommand } from '../commands/AddRiverDischarge/AddRiver
 import { AddTidalPolygonCommand } from '../commands/AddTidalPolygons/AddTidalPolygonCommand';
 import { SetupLayerManagerControlCommand } from '../commands/SetupLayerManagerControlCommand';
 import { LayerManagerContext } from '../layermanagement/LayerManagerProvider';
+import { AddWindrushBoundaryCommand } from '../commands/AddWindrushBoundaryCommand';
+import { AddWindrushRiversCommand } from '../commands/AddWindrushRiversCommand';
 
 interface UseMapCommandsProps {
   initialAssetId?: string;
@@ -36,7 +38,7 @@ export function useMapCommands({
   return useMemo(
     (): MapCommand[] => [
       new SetupLayerManagerControlCommand(layerManagerActor),
-      new SetBasemapCommand(theme.current ?? 'light'),
+      new SetBasemapCommand(),
       new AddTidalPolygonCommand(),
       new AddRiverDischargeCommand(layerManagerActor),
       new AddDownstreamImpactCommand(layerManagerActor),
@@ -46,6 +48,8 @@ export function useMapCommands({
         initialAssetId,
         initialCompany,
       ),
+      new AddWindrushBoundaryCommand(layerManagerActor),
+      new AddWindrushRiversCommand(layerManagerActor),
     ],
     [layerManagerActor, theme, setPathname, initialAssetId, initialCompany],
   );

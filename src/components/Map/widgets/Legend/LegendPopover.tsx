@@ -3,7 +3,7 @@ import { Flex, Heading, Text } from '@radix-ui/themes';
 import { useAtom } from 'jotai';
 import React from 'react';
 
-import { ERRORICON, GREENTICKICON, POOICON, UNKNOWNICON } from '@/constants/hostedImages';
+
 import useIsMobile from '@/lib/hooks/useIsMobile';
 
 import { legendOpen } from '../../../../lib/atoms';
@@ -12,10 +12,6 @@ import Popover from '../../../common/Popover/Popover';
 import SvgIcon from '../../../common/SvgIcon/SvgIcon';
 import { AppTheme } from '../../../Theme/AppTheme';
 
-const LegendIcon = styled.img`
-  width: 24px;
-  height: 24px;
-`;
 
 const DashedLine = styled.div`
   width: 24px;
@@ -26,10 +22,10 @@ const DashedLine = styled.div`
   border-radius: 2px;
 `;
 
-function LegendItem({ icon, label }: { icon: string; label: string }) {
+function LegendItem({ color, label }: { color: string; label: string }) {
   return (
     <Flex direction={'row'} gap={'2'} align={'center'}>
-      <LegendIcon src={icon} alt={label} />
+      <div style={{ width: 16, height: 16, borderRadius: '50%', backgroundColor: color, flexShrink: 0, border: '1px solid rgba(255,255,255,0.8)' }} />
       <Text>{label}</Text>
     </Flex>
   );
@@ -84,10 +80,10 @@ const LegendPopover = () => {
                 Legend
               </Heading>
               <Flex direction={'column'} gap={'2'}>
-                <LegendItem icon={POOICON} label="Discharging" />
-                <LegendItem icon={ERRORICON} label="Recent Discharge" />
-                <LegendItem icon={GREENTICKICON} label="Not Discharging" />
-                <LegendItem icon={UNKNOWNICON} label="Offline" />
+                <LegendItem color="#ef4444" label="Discharging" />
+                <LegendItem color="#f59e0b" label="Recent Discharge" />
+                <LegendItem color="#22c55e" label="Not Discharging" />
+                <LegendItem color="#9ca3af" label="Offline" />
                 <LegendLineItem label="Downstream of Spill" />
               </Flex>
               <Text size={'1'} color={'gray'} as={'p'} style={{ fontStyle: 'italic' }}>

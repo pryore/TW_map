@@ -147,8 +147,7 @@ const InformationModal = () => {
                     <Link href="https://bsky.app/profile/did:plc:yxxm76jvxcsuzg6ahfjiek3y">
                       Jonny Dawe.
                     </Link>{' '}
-                    Hosting costs are kindly supported by{' '}
-                    <Link href={'https://riveractionuk.com/'}>RiverAction</Link>.
+                    Built from <Link href={'https://github.com/JonnyDawe/UK-Sewage-Map/'}>SewageMap.co.uk</Link>.
                   </Text>
                   <Text weight={'bold'}>
                     For more information and to see the full source code, visit the GitHub

@@ -43,6 +43,31 @@ export class AddDischargeSourcesCommand implements MapCommand {
     return `discharge-sources-${company}`;
   }
 
+  private clusterConfig = {
+  type: "cluster",
+  clusterRadius: "60px",
+  clusterMinSize: "24px",
+  clusterMaxSize: "60px",
+  popupTemplate: {
+    title: "Cluster Summary",
+    content: "This cluster represents <b>{cluster_count}</b> sewage discharge locations.",
+    fieldInfos: [{
+      fieldName: "cluster_count",
+      format: { places: 0, digitSeparator: true }
+    }]
+  },
+  labelingInfo: [{
+    deconflictionStrategy: "none",
+    labelExpressionInfo: { expression: "Text($feature.cluster_count, '#,###')" },
+    symbol: {
+      type: "text",
+      color: "white",
+      font: { weight: "bold", family: "Inter", size: "12px" }
+    },
+    labelPlacement: "center-center"
+  }]
+};
+
   private initializeLayers(): void {
     const thamesWaterConfig = waterCompanyConfig['Thames Water'];
 
@@ -60,6 +85,7 @@ export class AddDischargeSourcesCommand implements MapCommand {
           renderer: thamesWaterAlertStatusRenderer,
           popupTemplate: dischargePopupTemplate,
           popupEnabled: true,
+          featureReduction: this.clusterConfig as any,
           orderBy: [
             {
               valueExpression: thamesWaterAlertStatusSymbolArcade,
@@ -88,6 +114,7 @@ export class AddDischargeSourcesCommand implements MapCommand {
           renderer: otherWaterAlertStatusRenderer,
           popupTemplate: dischargePopupTemplate,
           popupEnabled: true,
+          featureReduction: this.clusterConfig as any,
           orderBy: [
             {
               valueExpression: otherWaterAlertStatusSymbolArcade,
@@ -181,6 +208,7 @@ export class AddDischargeSourcesCommand implements MapCommand {
         renderer: scottishWaterAlertStatusRenderer,
         popupTemplate: dischargePopupTemplate,
         popupEnabled: true,
+        featureReduction: this.clusterConfig as any,
         orderBy: [
           {
             valueExpression: scottishWaterAlertStatusSymbolArcade,

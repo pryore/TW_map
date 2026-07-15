@@ -3,52 +3,66 @@ import UniqueValueClass from '@arcgis/core/renderers/support/UniqueValueClass';
 import UniqueValueGroup from '@arcgis/core/renderers/support/UniqueValueGroup';
 import UniqueValueRenderer from '@arcgis/core/renderers/UniqueValueRenderer';
 import SizeVariable from '@arcgis/core/renderers/visualVariables/SizeVariable';
-import PictureMarkerSymbol from '@arcgis/core/symbols/PictureMarkerSymbol';
+import SimpleMarkerSymbol from '@arcgis/core/symbols/SimpleMarkerSymbol';
 
-import { ERRORICON, GREENTICKICONSMALL, POOICON, UNKNOWNICON } from '@/constants/hostedImages';
+import windrushData from '@/data/windrush_upgrades.json';
 
 import {
   otherWaterAlertStatusSymbolArcade,
   scottishWaterAlertStatusSymbolArcade,
-  thamesWaterAlertStatusSymbolArcade,
 } from './dischargeSourceRendererArcade';
 
 /**
  * Defines the visual representation for different discharge statuses.
- * Uses different icons and sizes to distinguish between states:
- * - Discharging: Large poo icon (40x40)
- * - Not Discharging: Small green tick (20x20)
- * - Recent Discharge: Medium error icon (24x24)
- * - Offline: Small unknown icon (20x20)
- * - Unknown Status: Small unknown icon (20x20)
+ * Uses clean coloured dots for clarity.
  */
 const uniqueValueGroups = [
   new UniqueValueGroup({
     classes: [
       new UniqueValueClass({
         label: 'Discharging',
-        symbol: new PictureMarkerSymbol({ url: POOICON, width: '40', height: '40' }),
+        symbol: new SimpleMarkerSymbol({ style: 'circle', color: [239, 68, 68, 1], outline: { color: [255, 255, 255, 0.8], width: 1 } }),
         values: 3,
       }),
       new UniqueValueClass({
         label: 'Not Discharging',
-        symbol: new PictureMarkerSymbol({ url: GREENTICKICONSMALL, width: '20', height: '20' }),
+        symbol: new SimpleMarkerSymbol({ style: 'circle', color: [34, 197, 94, 1], outline: { color: [255, 255, 255, 0.8], width: 1 } }),
         values: 0,
       }),
       new UniqueValueClass({
         label: 'Recent Discharge',
-        symbol: new PictureMarkerSymbol({ url: ERRORICON, width: '24', height: '24' }),
+        symbol: new SimpleMarkerSymbol({ style: 'circle', color: [245, 158, 11, 1], outline: { color: [255, 255, 255, 0.8], width: 1 } }),
         values: 2,
       }),
       new UniqueValueClass({
         label: 'Offline',
-        symbol: new PictureMarkerSymbol({ url: UNKNOWNICON, width: '20', height: '20' }),
+        symbol: new SimpleMarkerSymbol({ style: 'circle', color: [156, 163, 175, 1], outline: { color: [255, 255, 255, 0.8], width: 1 } }),
         values: 1,
       }),
       new UniqueValueClass({
         label: 'Unknown Status',
-        symbol: new PictureMarkerSymbol({ url: UNKNOWNICON, width: '20', height: '20' }),
+        symbol: new SimpleMarkerSymbol({ style: 'circle', color: [156, 163, 175, 1], outline: { color: [255, 255, 255, 0.8], width: 1 } }),
         values: 999,
+      }),
+      new UniqueValueClass({
+        label: 'Discharging (Urgent Deadline)',
+        symbol: new SimpleMarkerSymbol({ style: 'circle', color: [239, 68, 68, 1], outline: { color: [0, 255, 255, 1], width: 3 } }),
+        values: 13,
+      }),
+      new UniqueValueClass({
+        label: 'Not Discharging (Urgent Deadline)',
+        symbol: new SimpleMarkerSymbol({ style: 'circle', color: [34, 197, 94, 1], outline: { color: [0, 255, 255, 1], width: 3 } }),
+        values: 10,
+      }),
+      new UniqueValueClass({
+        label: 'Recent Discharge (Urgent Deadline)',
+        symbol: new SimpleMarkerSymbol({ style: 'circle', color: [245, 158, 11, 1], outline: { color: [0, 255, 255, 1], width: 3 } }),
+        values: 12,
+      }),
+      new UniqueValueClass({
+        label: 'Offline (Urgent Deadline)',
+        symbol: new SimpleMarkerSymbol({ style: 'circle', color: [156, 163, 175, 1], outline: { color: [0, 255, 255, 1], width: 3 } }),
+        values: 11,
       }),
     ],
   }),
@@ -111,14 +125,65 @@ const sizeVariable = new SizeVariable({
   stops: STEPS,
 });
 
-/**
- * Renderer for Thames Water discharge sources.
- * Uses unique value rendering with scale-based symbol sizing.
- */
+const delayMappingArcade = `
+  var loc = Lower($feature.LocationName);
+  if (IsEmpty(loc)) return 0;
+  ${windrushData
+    .filter((d) => (d.Delay_length || 0) > 0)
+    .map((d) => `if (Find("${String(d.STW).toLowerCase()}", loc) > -1) return ${d.Delay_length};`)
+    .join('\n  ')}
+  return 0;
+`;
+
+const delaySizeVariable = new SizeVariable({
+  valueExpression: delayMappingArcade,
+  stops: [
+    { value: 0, size: "18px" },
+    { value: 1, size: "26px" },
+    { value: 2, size: "34px" },
+    { value: 3, size: "42px" },
+    { value: 4, size: "50px" },
+    { value: 5, size: "58px" }
+  ]
+});
+
+const urgentMappingArcade = `
+  var loc = Lower($feature.LocationName);
+  var isUrgent = false;
+  if (!IsEmpty(loc)) {
+    ${windrushData
+      .filter((d) => d.Revised_date == 2025 || d.Revised_date == 2026)
+      .map((d) => `if (Find("${String(d.STW).toLowerCase()}", loc) > -1) isUrgent = true;`)
+      .join('\n    ')}
+  }
+  
+  var status = 999;
+  if (
+      Boolean($feature.AlertPast48Hours) == true &&
+      Lower(Trim($feature.AlertStatus)) != "discharging" &&
+      Lower(Trim($feature.AlertStatus)) != "offline"
+  ) {
+      status = 2; // Recent Discharge
+  } else if (Lower(Trim($feature.AlertStatus)) == "not discharging") {
+      status = 0; // Not Discharging
+  } else if ($feature.AlertStatus == null || IsEmpty($feature.AlertStatus)) {
+      status = 999; // Unknown Status
+  } else if (Lower(Trim($feature.AlertStatus)) == "discharging") {
+      status = 3; // Discharging
+  } else if (Lower(Trim($feature.AlertStatus)) == "offline") {
+      status = 1; // Offline
+  }
+
+  if (isUrgent && status != 999) {
+      return status + 10;
+  }
+  return status;
+`;
+
 export const thamesWaterAlertStatusRenderer = new UniqueValueRenderer({
-  valueExpression: thamesWaterAlertStatusSymbolArcade,
+  valueExpression: urgentMappingArcade,
   uniqueValueGroups,
-  visualVariables: [sizeVariable],
+  visualVariables: [delaySizeVariable],
 });
 
 /**

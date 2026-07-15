@@ -3,6 +3,7 @@ import { Blockquote, Flex, Heading, Link, Text } from '@radix-ui/themes';
 import React from 'react';
 import { Chart } from 'react-google-charts';
 import useSWR from 'swr';
+import windrushData from '@/data/windrush_upgrades.json';
 
 import {
   calculateTotalDischargeLength,
@@ -462,9 +463,70 @@ const BulletPoint = styled.li`
   font-size: 14px;
 `;
 
+function EADataChart({ locationName }: { locationName: string }) {
+  const upgradeRecord = React.useMemo(() => {
+    if (!locationName) return null;
+    const lowerLocation = locationName.toLowerCase();
+    return windrushData.find(record => {
+      const stw = String(record.STW).toLowerCase().trim();
+      return stw && lowerLocation.includes(stw);
+    });
+  }, [locationName]);
+
+  if (!upgradeRecord) return null;
+  const events = upgradeRecord['Spill Events 2024-2025'] || 0;
+  const hours = upgradeRecord['Spill Hours 2024-2025'] || 0;
+
+  if (events === 0 && hours === 0) return null;
+  
+  // Calculate relative widths (max 100%)
+  const maxVal = Math.max(events, hours, 1);
+  const eventsPct = Math.min((events / maxVal) * 100, 100);
+  const hoursPct = Math.min((hours / maxVal) * 100, 100);
+
+  return (
+    <TimeLineWrapper style={{ marginBottom: '16px', backgroundColor: 'var(--gray-a2)', padding: '16px', borderRadius: '8px' }}>
+      <Text size={'3'} weight="bold" color="amber">Historic Data (Environment Agency Returns)</Text>
+      <Text size={'2'} color="gray" mb="3">
+        Total aggregated spills since the original deadline:
+      </Text>
+      
+      <Flex direction="column" gap="3" mt="2">
+        {/* Spill Events Bar */}
+        <div>
+          <Flex justify="between" mb="1">
+            <Text size="2" weight="bold">Spill Events</Text>
+            <Text size="2" weight="bold">{events}</Text>
+          </Flex>
+          <div style={{ width: '100%', backgroundColor: 'var(--gray-a4)', height: '12px', borderRadius: '6px', overflow: 'hidden' }}>
+            <div style={{ width: `${eventsPct}%`, backgroundColor: '#e24a68', height: '100%', transition: 'width 1s ease-in-out' }}></div>
+          </div>
+        </div>
+
+        {/* Total Hours Bar */}
+        <div>
+          <Flex justify="between" mb="1">
+            <Text size="2" weight="bold">Total Hours</Text>
+            <Text size="2" weight="bold">{hours}</Text>
+          </Flex>
+          <div style={{ width: '100%', backgroundColor: 'var(--gray-a4)', height: '12px', borderRadius: '6px', overflow: 'hidden' }}>
+            <div style={{ width: `${hoursPct}%`, backgroundColor: '#733f2e', height: '100%', transition: 'width 1s ease-in-out' }}></div>
+          </div>
+        </div>
+      </Flex>
+    </TimeLineWrapper>
+  );
+}
+
+
 function HistoricDischarges({ company, locationName }: { company: string; locationName: string }) {
   if (company === 'Thames Water') {
-    return <DischargeTimeline locationName={locationName} />;
+    return (
+      <Flex direction="column" gap="4">
+        <EADataChart locationName={locationName} />
+        <DischargeTimeline locationName={locationName} />
+      </Flex>
+    );
   }
 
   const message =

@@ -7,6 +7,6 @@ export class SetBasemapCommand implements MapCommand {
   constructor() { }
 
   async executeOnMap(map: EsriMap): Promise<void> {
-    map.basemap = 'gray-vector' as unknown as Basemap;
+    map.basemap = 'gray' as unknown as Basemap;
   }
 }

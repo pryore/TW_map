@@ -100,7 +100,7 @@ export function PopUpBody({
           <Tabs.List>
             <Tabs.Trigger value="latest">Latest</Tabs.Trigger>
             <Tabs.Trigger value="history">Discharge History</Tabs.Trigger>
-            <Tabs.Trigger value="offline">Reduction Plan</Tabs.Trigger>
+            <Tabs.Trigger value="offline">Storm Overflow Reduction Plan</Tabs.Trigger>
           </Tabs.List>
           <Box pt={'3'}>
             <Tabs.Content value="latest">

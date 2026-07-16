@@ -97,6 +97,8 @@ export class AddDischargeSourcesCommand implements MapCommand {
       });
     }
 
+    // Removed other water companies per user request
+    /*
     const otherWaterCompanyConfigs = Object.entries(waterCompanyConfig).filter(
       (entry): entry is [string, ArcGISWaterCompanyConfig] => entry[1].apiType === 'stream',
     );
@@ -125,6 +127,7 @@ export class AddDischargeSourcesCommand implements MapCommand {
         companyName,
       });
     });
+    */
   }
 
   private parseTimestamp(dateString: string): number | null {
@@ -240,6 +243,8 @@ export class AddDischargeSourcesCommand implements MapCommand {
       });
     });
 
+    // Removed Scottish Water per user request
+    /*
     // Scottish Water uses a direct REST API rather than an ArcGIS portal item,
     // so it is fetched and added asynchronously here.
     const scottishWaterLayer = await this.createScottishWaterLayer();
@@ -260,6 +265,7 @@ export class AddDischargeSourcesCommand implements MapCommand {
         },
       });
     }
+    */
 
     return {
       executeOnView: async (view: __esri.MapView) => {

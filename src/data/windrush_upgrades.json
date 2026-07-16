@@ -10,13 +10,12 @@
     "Allocation": "AMP8",
     "Delay_length": 3,
     "Status": "Delay",
-    "Spill Hours Since Original Deadline": null,
-    "Spill Events Since Original Deadline": null,
-    "Notes": "Major increase in treatment capacity from 23 to 36 l/s",
+    "Notes": "Major increase in treatment capacity from 23 to 36 L/s",
     "Public_exp": "More sewage treated during heavy rainfall to reduce spills",
     "Spill Hours 2024-2025": 926.0,
     "Spill Events 2024-2025": 82,
-    "Revised AMP 8 Date (from Document)": "Rephased to AMP 8 (2025-2030)"
+    "Revised AMP 8 Date (from Document)": "Rephased to AMP 8 (2025-2030)",
+    "Storm overflow reduction plan?": 2030.0
   },
   {
     "STW": "Bourton on the Water",
@@ -29,13 +28,12 @@
     "Allocation": "PR19",
     "Delay_length": 2,
     "Status": "Delay",
-    "Spill Hours Since Original Deadline": null,
-    "Spill Events Since Original Deadline": null,
     "Notes": "Threefold increase in FFT and network sealing works",
     "Public_exp": "More sewage fully treated instead of discharged during storms",
     "Spill Hours 2024-2025": 3374.5,
     "Spill Events 2024-2025": 202,
-    "Revised AMP 8 Date (from Document)": null
+    "Revised AMP 8 Date (from Document)": null,
+    "Storm overflow reduction plan?": 2045.0
   },
   {
     "STW": "Cassington",
@@ -48,13 +46,12 @@
     "Allocation": null,
     "Delay_length": 4,
     "Status": "Significant Delay",
-    "Spill Hours Since Original Deadline": null,
-    "Spill Events Since Original Deadline": null,
-    "Notes": "Expanded upgrade project linked to Salt Cross development",
+    "Notes": "The upgrade will improve its ability to treat the volumes of incoming sewage, reducing the need for untreated discharges in wet weather",
     "Public_exp": null,
     "Spill Hours 2024-2025": 0.0,
     "Spill Events 2024-2025": 0,
-    "Revised AMP 8 Date (from Document)": null
+    "Revised AMP 8 Date (from Document)": null,
+    "Storm overflow reduction plan?": null
   },
   {
     "STW": "Burford ",
@@ -63,17 +60,16 @@
     "Lon": "1\u00b038'09.9\"W",
     "Upgrade_type": null,
     "Original_date": 2045,
-    "Revised_date": 2045,
+    "Revised_date": 2030,
     "Allocation": null,
     "Delay_length": 0,
     "Status": null,
-    "Spill Hours Since Original Deadline": null,
-    "Spill Events Since Original Deadline": null,
-    "Notes": null,
+    "Notes": "Storm overflow reduction plan",
     "Public_exp": null,
     "Spill Hours 2024-2025": 0.0,
     "Spill Events 2024-2025": 0,
-    "Revised AMP 8 Date (from Document)": null
+    "Revised AMP 8 Date (from Document)": null,
+    "Storm overflow reduction plan?": 2045.0
   },
   {
     "STW": "Carterton",
@@ -86,13 +82,12 @@
     "Allocation": "PR19",
     "Delay_length": 3,
     "Status": "Delay",
-    "Spill Hours Since Original Deadline": null,
-    "Spill Events Since Original Deadline": null,
     "Notes": "Upgrade will improve its ability to treat the volumes of incoming sewage, reducing the need for untreated discharges in wet weather",
     "Public_exp": "Improve its ability to treat the volumes of incoming sewage, reducing the need for untreated discharges in wet weather",
     "Spill Hours 2024-2025": 403.75,
     "Spill Events 2024-2025": 25,
-    "Revised AMP 8 Date (from Document)": null
+    "Revised AMP 8 Date (from Document)": null,
+    "Storm overflow reduction plan?": 2045.0
   },
   {
     "STW": "Clanfield",
@@ -100,18 +95,17 @@
     "Lat": "51\u00b042'59.5\"N ",
     "Lon": "1\u00b035'02.0\"W",
     "Upgrade_type": null,
-    "Original_date": 2028,
-    "Revised_date": 2045,
+    "Original_date": 2025,
+    "Revised_date": 2028,
     "Allocation": "AMP7",
     "Delay_length": 0,
     "Status": null,
-    "Spill Hours Since Original Deadline": null,
-    "Spill Events Since Original Deadline": null,
-    "Notes": null,
+    "Notes": "Upgrade will improve its ability to treat the volumes of incoming sewage, reducing the need for untreated discharges in wet weather",
     "Public_exp": null,
     "Spill Hours 2024-2025": 0.0,
     "Spill Events 2024-2025": 0,
-    "Revised AMP 8 Date (from Document)": null
+    "Revised AMP 8 Date (from Document)": null,
+    "Storm overflow reduction plan?": 2045.0
   },
   {
     "STW": "Faringdon",
@@ -123,14 +117,13 @@
     "Revised_date": 2026,
     "Allocation": null,
     "Delay_length": 0,
-    "Status": null,
-    "Spill Hours Since Original Deadline": null,
-    "Spill Events Since Original Deadline": null,
-    "Notes": null,
+    "Status": "Complete",
+    "Notes": "The majority of work is completed at Faringdon as of March 2026, and are looking at the upgrades being fully operational in Autumn 2026",
     "Public_exp": null,
     "Spill Hours 2024-2025": 0.0,
     "Spill Events 2024-2025": 0,
-    "Revised AMP 8 Date (from Document)": null
+    "Revised AMP 8 Date (from Document)": null,
+    "Storm overflow reduction plan?": 2030.0
   },
   {
     "STW": "Lechlade",
@@ -143,13 +136,12 @@
     "Allocation": null,
     "Delay_length": 0,
     "Status": null,
-    "Spill Hours Since Original Deadline": null,
-    "Spill Events Since Original Deadline": null,
     "Notes": null,
     "Public_exp": null,
     "Spill Hours 2024-2025": 0.0,
     "Spill Events 2024-2025": 0,
-    "Revised AMP 8 Date (from Document)": null
+    "Revised AMP 8 Date (from Document)": null,
+    "Storm overflow reduction plan?": 2040.0
   },
   {
     "STW": "Northleach",
@@ -162,13 +154,12 @@
     "Allocation": "PR19",
     "Delay_length": 3,
     "Status": "Delay",
-    "Spill Hours Since Original Deadline": null,
-    "Spill Events Since Original Deadline": null,
-    "Notes": null,
+    "Notes": "This will improve its ability to treat the volumes of incoming sewage, reducing the need for untreated discharges in wet weather. This site has been issued for delivery, awaiting completion date. Current forecast is first quarter of 2030. ",
     "Public_exp": null,
     "Spill Hours 2024-2025": 0.0,
     "Spill Events 2024-2025": 0,
-    "Revised AMP 8 Date (from Document)": null
+    "Revised AMP 8 Date (from Document)": null,
+    "Storm overflow reduction plan?": 2045.0
   },
   {
     "STW": "South Leigh",
@@ -181,13 +172,12 @@
     "Allocation": null,
     "Delay_length": 1,
     "Status": "Delay",
-    "Spill Hours Since Original Deadline": null,
-    "Spill Events Since Original Deadline": null,
-    "Notes": "This scheme will ensure a higher quality of treated effluent, reducing phosphorus levels entering the river to below an average level of 2mg/l",
+    "Notes": "This scheme will ensure a higher quality of treated effluent, reducing phosphorus levels entering the river to below an average level of 2mg/l. This work has been completed as of March 2026.",
     "Public_exp": null,
     "Spill Hours 2024-2025": 927.25,
     "Spill Events 2024-2025": 49,
-    "Revised AMP 8 Date (from Document)": null
+    "Revised AMP 8 Date (from Document)": null,
+    "Storm overflow reduction plan?": 2025.0
   },
   {
     "STW": "Standlake",
@@ -200,13 +190,12 @@
     "Allocation": null,
     "Delay_length": 0,
     "Status": null,
-    "Spill Hours Since Original Deadline": null,
-    "Spill Events Since Original Deadline": null,
     "Notes": null,
     "Public_exp": null,
     "Spill Hours 2024-2025": 0.0,
     "Spill Events 2024-2025": 0,
-    "Revised AMP 8 Date (from Document)": null
+    "Revised AMP 8 Date (from Document)": null,
+    "Storm overflow reduction plan?": 2030.0
   },
   {
     "STW": "Witney",
@@ -215,17 +204,16 @@
     "Lon": "1\u00b029'44.0\"W",
     "Upgrade_type": null,
     "Original_date": 2024,
-    "Revised_date": 2025,
+    "Revised_date": 2026,
     "Allocation": null,
     "Delay_length": 0,
     "Status": null,
-    "Spill Hours Since Original Deadline": null,
-    "Spill Events Since Original Deadline": null,
-    "Notes": null,
+    "Notes": "Witney STW is being upgraded at a cost of more than \u00a316 million. This work will provide a major increase in treatment capacity, from 240 to 399 litres per second. This will reduce the need for untreated discharges in wet weather. This work is expected to complete in autumn 2025. The project is in final stages of takeover, currently testing is taking place with the final commissioning due in late Spring.",
     "Public_exp": null,
     "Spill Hours 2024-2025": 576.0,
     "Spill Events 2024-2025": 37,
-    "Revised AMP 8 Date (from Document)": "late 2024"
+    "Revised AMP 8 Date (from Document)": "late 2024",
+    "Storm overflow reduction plan?": 2040.0
   },
   {
     "STW": "Stanton Harcourt",
@@ -238,12 +226,11 @@
     "Allocation": "PR19",
     "Delay_length": 1,
     "Status": "Complete",
-    "Spill Hours Since Original Deadline": null,
-    "Spill Events Since Original Deadline": null,
     "Notes": "This scheme will ensure a higher quality of treated effluent, reducing phosphorus levels entering the river to below an average level of 0.6mg/l*. This was completed in 2026.",
     "Public_exp": null,
     "Spill Hours 2024-2025": 709.25,
     "Spill Events 2024-2025": 42,
-    "Revised AMP 8 Date (from Document)": null
+    "Revised AMP 8 Date (from Document)": null,
+    "Storm overflow reduction plan?": 2045.0
   }
 ]

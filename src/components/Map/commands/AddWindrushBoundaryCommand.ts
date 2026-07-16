@@ -5,6 +5,7 @@ import SimpleLineSymbol from '@arcgis/core/symbols/SimpleLineSymbol';
 import SimpleFillSymbol from '@arcgis/core/symbols/SimpleFillSymbol';
 import FeatureFilter from '@arcgis/core/layers/support/FeatureFilter';
 import FeatureEffect from '@arcgis/core/layers/support/FeatureEffect';
+import * as geometryEngine from '@arcgis/core/geometry/geometryEngine';
 
 import {
     MapCommand,
@@ -82,8 +83,9 @@ export class AddWindrushBoundaryCommand implements MapCommand {
                         // We can only apply spatial filters to layers that support it (FeatureLayer, GeoJSONLayer)
                         if (l.type === 'feature' || l.type === 'geojson') {
                             const targetLayerView = await view.whenLayerView(l as __esri.FeatureLayer | __esri.GeoJSONLayer);
+                            const paddedBoundary = geometryEngine.buffer(boundaryGeometry, 2, "kilometers");
                             const filter = new FeatureFilter({
-                                geometry: boundaryGeometry,
+                                geometry: paddedBoundary,
                                 spatialRelationship: "intersects"
                             });
 

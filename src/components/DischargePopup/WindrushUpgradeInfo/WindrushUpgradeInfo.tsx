@@ -75,3 +75,33 @@ export function WindrushUpgradeInfo({ company, locationName }: WindrushUpgradeIn
 
 // Ensure Box is imported correctly from radix above! We used it in Flex.
 const Box = ({ children, ...props }: any) => <div {...props}>{children}</div>;
+
+export function StormOverflowReductionPlan({ company, locationName }: WindrushUpgradeInfoProps) {
+    const isThamesWater = company.toLowerCase().includes('thames');
+
+    const upgradeRecord = React.useMemo(() => {
+        if (!isThamesWater || !locationName) return null;
+        const lowerLocation = locationName.toLowerCase();
+        return windrushData.find(record => {
+            const stw = String(record.STW).toLowerCase().trim();
+            return stw && lowerLocation.includes(stw);
+        });
+    }, [locationName, isThamesWater]);
+
+    if (!isThamesWater || !upgradeRecord || !upgradeRecord['Storm overflow reduction plan?']) {
+        return (
+            <Flex p="3" direction="column" gap="2" align="center" justify="center">
+                <Text color="gray" size="2">No reduction plan data available for this site.</Text>
+            </Flex>
+        );
+    }
+
+    return (
+        <Flex direction="column" gap="3" p="3">
+            <Heading size="3" mb="1" color="blue">Storm Overflow Reduction Plan</Heading>
+            <Text size="2" style={{ whiteSpace: 'pre-wrap' }}>
+                {upgradeRecord['Storm overflow reduction plan?']}
+            </Text>
+        </Flex>
+    );
+}

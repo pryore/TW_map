@@ -5,7 +5,7 @@ import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import Field from '@arcgis/core/layers/support/Field';
 import EsriMap from '@arcgis/core/Map';
 
-import { ArcGISWaterCompanyConfig, waterCompanyConfig } from '@/constants/sewagemapdata';
+import { waterCompanyConfig } from '@/constants/sewagemapdata';
 import { MapCommand, ViewCommand } from '@/lib/arcgis/typings/commandtypes';
 import {
   validateScottishWaterApiResponse,
@@ -16,14 +16,10 @@ import {
 
 import { SewageMapLayerManagerActor } from '../../layermanagement/types';
 import { dischargePopupTemplate } from './config/dischargePopup';
-import {
-  otherWaterAlertStatusRenderer,
   scottishWaterAlertStatusRenderer,
   thamesWaterAlertStatusRenderer,
 } from './config/dischargeRenderer';
 import windrushData from '@/data/windrush_upgrades.json';
-import {
-  otherWaterAlertStatusSymbolArcade,
   scottishWaterAlertStatusSymbolArcade,
   thamesWaterAlertStatusSymbolArcade,
 } from './config/dischargeSourceRendererArcade';
@@ -137,93 +133,8 @@ export class AddDischargeSourcesCommand implements MapCommand {
   }
 
   private async createScottishWaterLayer(): Promise<__esri.FeatureLayer | null> {
-    const scottishWaterConfig = waterCompanyConfig['Scottish Water'];
-    if (!scottishWaterConfig || scottishWaterConfig.apiType !== 'scottishwater') return null;
-
-    try {
-      const response = await fetch(scottishWaterConfig.apiUrl);
-      if (!response.ok) {
-        console.error(`Failed to fetch Scottish Water data: HTTP ${response.status}`);
-        return null;
-      }
-
-      const data: unknown = await response.json();
-      const validated = validateScottishWaterApiResponse(data);
-      if (!validated) {
-        console.error('Scottish Water API response did not match expected schema');
-        return null;
-      }
-
-      const withCoords = validated.results.filter(
-        (
-          item,
-        ): item is typeof item & {
-          DISCHARGE_OVERFLOW_LOCATION_LATITUDE: number;
-          DISCHARGE_OVERFLOW_LOCATION_LONGITUDE: number;
-        } =>
-          item.DISCHARGE_OVERFLOW_LOCATION_LATITUDE != null &&
-          item.DISCHARGE_OVERFLOW_LOCATION_LONGITUDE != null,
-      );
-
-      if (withCoords.length === 0) return null;
-
-      const graphics = withCoords.map(
-        (item, index) =>
-          new Graphic({
-            geometry: new Point({
-              longitude: item.DISCHARGE_OVERFLOW_LOCATION_LONGITUDE,
-              latitude: item.DISCHARGE_OVERFLOW_LOCATION_LATITUDE,
-              spatialReference: { wkid: 4326 },
-            }),
-            attributes: {
-              OBJECTID: index,
-              ASSET_ID: item.ASSET_ID,
-              ASSET_NAME: item.ASSET_NAME,
-              OVERFLOW_STATUS_ID: item.OVERFLOW_STATUS_ID,
-              RECEIVING_WATER: item.RECEIVING_WATER,
-              OVERFLOW_START_DATETIME: item.OVERFLOW_START_DATETIME
-                ? this.parseTimestamp(item.OVERFLOW_START_DATETIME)
-                : null,
-              OVERFLOW_END_DATETIME: item.OVERFLOW_END_DATETIME
-                ? this.parseTimestamp(item.OVERFLOW_END_DATETIME)
-                : null,
-            },
-          }),
-      );
-
-      return new FeatureLayer({
-        title: 'Scottish Water',
-        id: this.generateLayerId('Scottish Water'),
-        copyright: 'Scottish Water',
-        source: graphics,
-        geometryType: 'point',
-        spatialReference: { wkid: 4326 },
-        objectIdField: 'OBJECTID',
-        fields: [
-          new Field({ name: 'OBJECTID', type: 'oid' }),
-          new Field({ name: 'ASSET_ID', type: 'string' }),
-          new Field({ name: 'ASSET_NAME', type: 'string' }),
-          new Field({ name: 'OVERFLOW_STATUS_ID', type: 'integer' }),
-          new Field({ name: 'RECEIVING_WATER', type: 'string' }),
-          new Field({ name: 'OVERFLOW_START_DATETIME', type: 'date' }),
-          new Field({ name: 'OVERFLOW_END_DATETIME', type: 'date' }),
-        ],
-        outFields: ['*'],
-        renderer: scottishWaterAlertStatusRenderer,
-        popupTemplate: dischargePopupTemplate,
-        popupEnabled: true,
-        featureReduction: this.clusterConfig as any,
-        orderBy: [
-          {
-            valueExpression: scottishWaterAlertStatusSymbolArcade,
-            order: 'descending',
-          },
-        ],
-      });
-    } catch (error) {
-      console.error('Failed to load Scottish Water data:', error);
-      return null;
-    }
+    // Removed Scottish Water logic entirely to avoid unused function error
+    return null;
   }
 
   async executeOnMap(map: EsriMap): Promise<ViewCommand> {

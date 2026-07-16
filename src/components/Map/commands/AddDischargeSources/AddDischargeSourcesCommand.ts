@@ -21,6 +21,7 @@ import {
   scottishWaterAlertStatusRenderer,
   thamesWaterAlertStatusRenderer,
 } from './config/dischargeRenderer';
+import windrushData from '@/data/windrush_upgrades.json';
 import {
   otherWaterAlertStatusSymbolArcade,
   scottishWaterAlertStatusSymbolArcade,
@@ -242,6 +243,71 @@ export class AddDischargeSourcesCommand implements MapCommand {
         },
       });
     });
+
+    // Generate placeholder layer for STWs missing from Thames Water API
+    const thamesLayer = this.layers.find(l => l.companyName === 'Thames Water')?.layer;
+    if (thamesLayer) {
+      try {
+        const query = thamesLayer.createQuery();
+        query.where = "1=1";
+        query.outFields = ["LocationName"];
+        const results = await thamesLayer.queryFeatures(query);
+        const existingNames = results.features.map(f => String(f.attributes.LocationName || "").toLowerCase());
+        
+        // Find STWs from Excel that aren't in Thames Water live API
+        const missingStws = windrushData.filter(record => {
+            const stwName = String(record.STW || "").toLowerCase().trim();
+            if (!stwName) return false;
+            // Check if any existing name contains this STW name
+            const isMissing = !existingNames.some(name => name.includes(stwName));
+            // Ensure we have Lat/Lon
+            return isMissing && record.Lat && record.Lon;
+        });
+
+        if (missingStws.length > 0) {
+            const graphics = missingStws.map((record, index) => new Graphic({
+                geometry: new Point({
+                    longitude: Number(record.Lon),
+                    latitude: Number(record.Lat),
+                    spatialReference: { wkid: 4326 }
+                }),
+                attributes: {
+                    OBJECTID: index,
+                    LocationName: `${record.STW} (Offline)`,
+                    AlertStatus: 'Offline',
+                    AlertPast48Hours: 0,
+                    Company: 'Thames Water'
+                }
+            }));
+
+            const placeholderLayer = new FeatureLayer({
+                title: 'Missing Thames Water STWs',
+                id: this.generateLayerId('Thames Water Missing Placeholders'),
+                source: graphics,
+                geometryType: 'point',
+                spatialReference: { wkid: 4326 },
+                objectIdField: 'OBJECTID',
+                fields: [
+                    new Field({ name: 'OBJECTID', type: 'oid' }),
+                    new Field({ name: 'LocationName', type: 'string' }),
+                    new Field({ name: 'AlertStatus', type: 'string' }),
+                    new Field({ name: 'AlertPast48Hours', type: 'integer' }),
+                    new Field({ name: 'Company', type: 'string' })
+                ],
+                outFields: ['*'],
+                renderer: thamesWaterAlertStatusRenderer,
+                popupTemplate: dischargePopupTemplate,
+                popupEnabled: true,
+                featureReduction: this.clusterConfig as any
+            });
+
+            map.add(placeholderLayer);
+            this.layers.push({ layer: placeholderLayer, companyName: 'Thames Water' });
+        }
+      } catch (e) {
+          console.error("Failed to generate missing STW placeholders", e);
+      }
+    }
 
     // Removed Scottish Water per user request
     /*

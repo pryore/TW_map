@@ -148,6 +148,7 @@ export class AddDischargeSourcesCommand implements MapCommand {
     const thamesLayer = this.layers.find(l => l.companyName === 'Thames Water')?.layer;
     if (thamesLayer) {
       try {
+        await thamesLayer.load();
         const query = thamesLayer.createQuery();
         query.where = "1=1";
         query.outFields = ["LocationName"];

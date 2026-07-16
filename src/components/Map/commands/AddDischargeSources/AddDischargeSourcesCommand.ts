@@ -8,19 +8,18 @@ import EsriMap from '@arcgis/core/Map';
 import { waterCompanyConfig } from '@/constants/sewagemapdata';
 import { MapCommand, ViewCommand } from '@/lib/arcgis/typings/commandtypes';
 import {
-  validateScottishWaterApiResponse,
-  validateScottishWaterDischargeAttributes,
   validateThamesWaterDischargeAttributes,
   validateWaterCompanyDischargeAttributes,
+  validateScottishWaterDischargeAttributes,
 } from '@/utils/discharge/schemas';
 
 import { SewageMapLayerManagerActor } from '../../layermanagement/types';
 import { dischargePopupTemplate } from './config/dischargePopup';
-  scottishWaterAlertStatusRenderer,
+import {
   thamesWaterAlertStatusRenderer,
 } from './config/dischargeRenderer';
 import windrushData from '@/data/windrush_upgrades.json';
-  scottishWaterAlertStatusSymbolArcade,
+import {
   thamesWaterAlertStatusSymbolArcade,
 } from './config/dischargeSourceRendererArcade';
 
@@ -125,16 +124,6 @@ export class AddDischargeSourcesCommand implements MapCommand {
       });
     });
     */
-  }
-
-  private parseTimestamp(dateString: string): number | null {
-    const ts = new Date(dateString).getTime();
-    return Number.isNaN(ts) ? null : ts;
-  }
-
-  private async createScottishWaterLayer(): Promise<__esri.FeatureLayer | null> {
-    // Removed Scottish Water logic entirely to avoid unused function error
-    return null;
   }
 
   async executeOnMap(map: EsriMap): Promise<ViewCommand> {

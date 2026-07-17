@@ -156,20 +156,33 @@ export class AddDischargeSourcesCommand implements MapCommand {
         const existingNames = results.features.map(f => String(f.attributes.LocationName || "").toLowerCase());
         
         // Find STWs from Excel that aren't in Thames Water live API
+        const parseCoordinate = (coord: string | number): number => {
+            if (typeof coord === 'number') return coord;
+            const num = Number(coord);
+            if (!isNaN(num)) return num;
+            const match = String(coord).match(/(\d+)[^\d]+(\d+)[^\d]+([\d.]+)[^\d]+([NSWE])/i);
+            if (match) {
+                let dd = parseFloat(match[1]) + parseFloat(match[2]) / 60 + parseFloat(match[3]) / 3600;
+                if (match[4].toUpperCase() === 'S' || match[4].toUpperCase() === 'W') dd *= -1;
+                return dd;
+            }
+            return NaN;
+        };
+
         const missingStws = windrushData.filter(record => {
             const stwName = String(record.STW || "").toLowerCase().trim();
             if (!stwName) return false;
             // Check if any existing name contains this STW name
             const isMissing = !existingNames.some(name => name.includes(stwName));
-            // Ensure we have Lat/Lon
-            return isMissing && record.Lat && record.Lon;
+            // Ensure we have Lat/Lon that can be parsed
+            return isMissing && !isNaN(parseCoordinate(record.Lat)) && !isNaN(parseCoordinate(record.Lon));
         });
 
         if (missingStws.length > 0) {
             const graphics = missingStws.map((record, index) => new Graphic({
                 geometry: new Point({
-                    longitude: Number(record.Lon),
-                    latitude: Number(record.Lat),
+                    longitude: parseCoordinate(record.Lon),
+                    latitude: parseCoordinate(record.Lat),
                     spatialReference: { wkid: 4326 }
                 }),
                 attributes: {

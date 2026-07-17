@@ -34,7 +34,7 @@ const SvgIcon = React.forwardRef<SVGSVGElement, IconProps>(
       name={name}
       {...props}
     >
-      <use xlinkHref={`/svg/sprites.svg#${name}`} />
+      <use xlinkHref={`${import.meta.env.BASE_URL}svg/sprites.svg#${name}`} />
     </StyledSvg>
   ),
 );

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
-import { Box, Button, Flex, Heading, Separator, Text } from '@radix-ui/themes';
+import { Box, Button, Flex, Heading, Text } from '@radix-ui/themes';
 import React from 'react';
 import Wave from 'react-wavify';
 
@@ -10,7 +10,7 @@ import MapButton from '../common/Buttons/MapButton';
 import Dialog from '../common/Dialog/Dialog';
 import { ModalHeader } from '../common/Dialog/DialogTitle';
 import SvgIcon from '../common/SvgIcon/SvgIcon';
-import { Em, Link } from '../common/Text';
+import { Link } from '../common/Text';
 import TextInfoList from '../TextInfoList/TextInfoList';
 import { AppTheme } from '../Theme/AppTheme';
 
@@ -65,108 +65,33 @@ const InformationModal = () => {
                 }}
               />
               <Box position={'relative'}>
-                <ModalHeader title="Information" subTitle="Sewage Map" level={2}></ModalHeader>
+                <ModalHeader title="Information" subTitle="Windrush Catchment Sewage Map" level={2}></ModalHeader>
 
                 <Flex direction={'column'} gap={'4'} mb="4">
                   <Text>
-                    This map shows, in real-time, which river sections are downstream of sewage
-                    discharges from storm overflows.
+                    This map focuses on the <strong>Windrush Catchment</strong> and the performance of Thames Water's Sewage Treatment Works (STWs) within this region.
                   </Text>
+                  
                   <TextInfoList icon={<SvgIcon name="icon-water-info" size={48}></SvgIcon>}>
                     <Heading as={'h3'} size={'4'}>
-                      About the Data
+                      Tracking Upgrades & Delays
                     </Heading>
                     <Text>
-                      The data is collected through Event Duration Monitoring by individual water
-                      companies, providing near-real time data on storm overflows. Storm overflows
-                      release untreated, diluted sewage into the environment. Most data is accessed
-                      from the{' '}
-                      <Link href="https://www.streamwaterdata.co.uk/pages/storm-overflows-data">
-                        Storm Overflow Hub
-                      </Link>{' '}
-                      maintained by Water UK.{' '}
-                      <Link href="https://data.thameswater.co.uk/s/">Thames Water</Link> and{' '}
-                      <Link href="https://www.scottishwater.co.uk/Help-and-Resources/Open-Data/Overflow-Map-Data">
-                        Scottish Water
-                      </Link>{' '}
-                      provide their own APIs which we use for their regions. We wrote an article
-                      about why water companies need to be more transparent with environmental
-                      models and data in{' '}
-                      <Link href="https://theconversation.com/water-companies-now-have-to-release-live-sewage-spill-data-heres-why-more-transparency-is-the-key-to-cleaner-rivers-239444">
-                        The Conversation.
-                      </Link>
+                      We are closely tracking Thames Water's promised infrastructure upgrades, specifically their <strong>Flow to Full Treatment (FFT) compliance</strong> targets and their <strong>Storm Overflow Reduction Plans</strong>. Crucially, this map visualizes the alarming delays to these vital upgrades, making it clear exactly how far behind schedule the water company is operating.
                     </Text>
                   </TextInfoList>
-                  <TextInfoList icon={<SvgIcon name="icon-hydrology-model" size={48}></SvgIcon>}>
-                    <Heading as={'h3'} size={'4'}>
-                      Hydrology Model{' '}
-                    </Heading>
-                    <Text>
-                      To identify river stretches downstream of an overflow, we track sewage
-                      discharges downstream along <Em>non-tidal</Em> river networks using
-                      topographic datasets. We highlight areas downstream of active and recent
-                      discharges in brown. This simple approach does not consider dilution, river
-                      flow, or dispersion effects on pollutant concentration. Since water companies
-                      do not provide real-time data on discharge volume or pollutant concentrations,
-                      accurately modelling these effects is very difficult. Consequently, on its
-                      own, <Em>this map should not be used to assess pollution or health risks</Em>{' '}
-                      at a specific location, for example, for bathing water quality. Note that, the
-                      simple hydrological model may produce 'unexpected' results in some areas, for
-                      instance in lakes or where rivers are tidal very far in-land.
-                    </Text>
-                  </TextInfoList>
+
                   <TextInfoList icon={<SvgIcon name="icon-waste-water" size={48}></SvgIcon>}>
                     <Heading as={'h3'} size={'4'}>
-                      Waste Water
+                      The Impact of Delays
                     </Heading>
                     <Text>
-                      According to the Environment Agency’s{' '}
-                      <Link href="https://www.bbc.co.uk/news/science-environment-68665335">
-                        data for 2023
-                      </Link>
-                      , sewage overflows released untreated sewage for total duration of 3.6 million
-                      hours. Untreated sewage overflows are responsible for releasing various
-                      pollutants, including{' '}
-                      <Link href="https://www.nature.com/articles/s41893-021-00718-2">
-                        microplastics
-                      </Link>
-                      ,{' '}
-                      <Link href="https://www.sciencedirect.com/science/article/pii/S0048969724029747">
-                        illegal drugs
-                      </Link>
-                      , and{' '}
-                      <Link href="https://www.sciencedirect.com/science/article/pii/S0048969723029030">
-                        human effluent
-                      </Link>
-                      , into the environment.
+                      The environmental cost of these missed deadlines is severe. By clicking on the individual treatment works, you can see exactly <strong>how many spill events and total hours of untreated sewage discharges</strong> have occurred since their original upgrade deadlines passed. The data reveals a concerning trend of continued pollution while essential infrastructure improvements are pushed back to future planning periods (AMP8 and beyond).
                     </Text>
                   </TextInfoList>
-                  <Text mt={'2'}>
-                    This site was created by{' '}
-                    <Link href="https://alexlipp.github.io/">Alex Lipp (UCL)</Link> &{' '}
-                    <Link href="https://bsky.app/profile/did:plc:yxxm76jvxcsuzg6ahfjiek3y">
-                      Jonny Dawe.
-                    </Link>{' '}
-                    Built from <Link href={'https://github.com/JonnyDawe/UK-Sewage-Map/'}>SewageMap.co.uk</Link>.
-                  </Text>
-                  <Text weight={'bold'}>
-                    For more information and to see the full source code, visit the GitHub
-                    repositories:
-                  </Text>
-                  <Flex gap={'2'} justify={'start'}>
-                    <Link href="https://github.com/AlexLipp/sewage-map ">backend</Link>
-                    <Separator orientation="vertical"></Separator>
-                    <Link href="https://github.com/JonnyDawe/UK-Sewage-Map/ ">frontend</Link>
-                  </Flex>
 
                   <Text mt={'2'}>
-                    Whilst every effort has been made to ensure accuracy, this is experimental
-                    software and errors may occur. If you see any issues please reach out to us so
-                    we can fix them (see GitHub links above).
-                  </Text>
-
-                  <Text mt={'2'}>
-                    <strong>We welcome suggestions and contributions!</strong>
+                    This specific Windrush Catchment view was adapted from the national <Link href={'https://github.com/JonnyDawe/UK-Sewage-Map/'}>SewageMap.co.uk</Link> project (created by Alex Lipp & Jonny Dawe) to provide focused, regional accountability for the Windrush river system.
                   </Text>
                 </Flex>
                 <Flex justify={'end'} direction={'row'} pt={'2'}>

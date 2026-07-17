@@ -466,9 +466,10 @@ const BulletPoint = styled.li`
 function EADataChart({ locationName }: { locationName: string }) {
   const upgradeRecord = React.useMemo(() => {
     if (!locationName) return null;
-    const lowerLocation = locationName.toLowerCase();
+    const normalize = (s: string) => s.toLowerCase().replace(/[-\s]/g, '');
+    const lowerLocation = normalize(locationName);
     return windrushData.find(record => {
-      const stw = String(record.STW).toLowerCase().trim();
+      const stw = normalize(String(record.STW));
       return stw && lowerLocation.includes(stw);
     });
   }, [locationName]);

@@ -14,11 +14,12 @@ export function WindrushUpgradeInfo({ company, locationName }: WindrushUpgradeIn
 
     const upgradeRecord = React.useMemo(() => {
         if (!isThamesWater || !locationName) return null;
-        const lowerLocation = locationName.toLowerCase();
+        const normalize = (s: string) => s.toLowerCase().replace(/[-\s]/g, '');
+        const lowerLocation = normalize(locationName);
 
         // Find the record where the location name contains the STW name from the spreadsheet
         return windrushData.find(record => {
-            const stw = String(record.STW).toLowerCase().trim();
+            const stw = normalize(String(record.STW));
             return stw && lowerLocation.includes(stw);
         });
     }, [locationName, isThamesWater]);
@@ -81,9 +82,10 @@ export function StormOverflowReductionPlan({ company, locationName }: WindrushUp
 
     const upgradeRecord = React.useMemo(() => {
         if (!isThamesWater || !locationName) return null;
-        const lowerLocation = locationName.toLowerCase();
+        const normalize = (s: string) => s.toLowerCase().replace(/[-\s]/g, '');
+        const lowerLocation = normalize(locationName);
         return windrushData.find(record => {
-            const stw = String(record.STW).toLowerCase().trim();
+            const stw = normalize(String(record.STW));
             return stw && lowerLocation.includes(stw);
         });
     }, [locationName, isThamesWater]);

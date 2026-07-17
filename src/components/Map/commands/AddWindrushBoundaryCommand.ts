@@ -74,7 +74,7 @@ export class AddWindrushBoundaryCommand implements MapCommand {
 
                     // Apply this spatial filter to all relevant discharge layers 
                     const targetLayers = view.map.layers.filter(l =>
-                        l.id.startsWith('discharge-sources-') ||
+                        (l.id.startsWith('discharge-sources-') && !l.id.includes('Placeholder')) ||
                         l.id.startsWith('downstream-impact-') ||
                         l.id.startsWith('downstream-discharge-')
                     );

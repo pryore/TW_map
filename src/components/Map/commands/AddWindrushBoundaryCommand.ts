@@ -83,7 +83,7 @@ export class AddWindrushBoundaryCommand implements MapCommand {
                         // We can only apply spatial filters to layers that support it (FeatureLayer, GeoJSONLayer)
                         if (l.type === 'feature' || l.type === 'geojson') {
                             const targetLayerView = await view.whenLayerView(l as __esri.FeatureLayer | __esri.GeoJSONLayer);
-                            const paddedBoundary = geometryEngine.buffer(boundaryGeometry as __esri.Polygon, 2, "kilometers") as __esri.Polygon;
+                            const paddedBoundary = geometryEngine.buffer(boundaryGeometry as __esri.Polygon, 5, "kilometers") as __esri.Polygon;
                             const filter = new FeatureFilter({
                                 geometry: paddedBoundary,
                                 spatialRelationship: "intersects"

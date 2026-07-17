@@ -153,7 +153,8 @@ export class AddDischargeSourcesCommand implements MapCommand {
         query.where = "1=1";
         query.outFields = ["LocationName"];
         const results = await thamesLayer.queryFeatures(query);
-        const existingNames = results.features.map(f => String(f.attributes.LocationName || "").toLowerCase());
+        const normalize = (s: string) => s.toLowerCase().replace(/[-\s]/g, '');
+        const existingNames = results.features.map(f => normalize(String(f.attributes.LocationName || "")));
         
         // Find STWs from Excel that aren't in Thames Water live API
         const parseCoordinate = (coord: string | number): number => {
@@ -170,7 +171,7 @@ export class AddDischargeSourcesCommand implements MapCommand {
         };
 
         const missingStws = windrushData.filter(record => {
-            const stwName = String(record.STW || "").toLowerCase().trim();
+            const stwName = normalize(String(record.STW || ""));
             if (!stwName) return false;
             // Check if any existing name contains this STW name
             const isMissing = !existingNames.some(name => name.includes(stwName));

@@ -51,6 +51,17 @@ export function WindrushUpgradeInfo({ company, locationName }: WindrushUpgradeIn
                 </Box>
             </Flex>
 
+            <Flex gap="3">
+                <Box>
+                    <Text size="2" color="gray" as="div">Original Allocation</Text>
+                    <Text size="2" weight="bold">{upgradeRecord['Original Allocation'] ?? 'Unknown'}</Text>
+                </Box>
+                <Box>
+                    <Text size="2" color="gray" as="div">Revised Allocation</Text>
+                    <Text size="2" weight="bold">{upgradeRecord['Revised Allocation'] ?? 'Unknown'}</Text>
+                </Box>
+            </Flex>
+
             {upgradeRecord.Status === 'Delay' && (
                 <Badge color="red" variant="soft" mt="1" style={{ alignSelf: 'flex-start' }}>
                     Delayed by {upgradeRecord.Delay_length} years

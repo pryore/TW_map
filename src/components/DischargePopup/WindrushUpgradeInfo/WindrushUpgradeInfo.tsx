@@ -32,6 +32,17 @@ export function WindrushUpgradeInfo({ company, locationName }: WindrushUpgradeIn
         </Flex>
     );
 
+    let originalAllocation = upgradeRecord['Original Allocation'] ?? 'Unknown';
+    if (originalAllocation === 'PR19') {
+        originalAllocation = 'AMP 7';
+    }
+
+    const originalDate = Number(upgradeRecord.Original_date);
+    const revisedDate = Number(upgradeRecord.Revised_date);
+    const delayLength = (!isNaN(originalDate) && !isNaN(revisedDate) && revisedDate > originalDate)
+        ? (revisedDate - originalDate)
+        : upgradeRecord.Delay_length;
+
     return (
         <Flex direction="column" gap="3" p="2">
             <Heading size="3" mb="1" color="orange">{upgradeRecord.STW} - Proposed Upgrade</Heading>
@@ -54,17 +65,13 @@ export function WindrushUpgradeInfo({ company, locationName }: WindrushUpgradeIn
             <Flex gap="3">
                 <Box>
                     <Text size="2" color="gray" as="div">Original Allocation</Text>
-                    <Text size="2" weight="bold">{upgradeRecord['Original Allocation'] ?? 'Unknown'}</Text>
-                </Box>
-                <Box>
-                    <Text size="2" color="gray" as="div">Revised Allocation</Text>
-                    <Text size="2" weight="bold">{upgradeRecord['Revised Allocation'] ?? 'Unknown'}</Text>
+                    <Text size="2" weight="bold">{originalAllocation}</Text>
                 </Box>
             </Flex>
 
-            {upgradeRecord.Status === 'Delay' && (
+            {upgradeRecord.Status?.includes('Delay') && (
                 <Badge color="red" variant="soft" mt="1" style={{ alignSelf: 'flex-start' }}>
-                    Delayed by {upgradeRecord.Delay_length} years
+                    Delayed by {delayLength} years
                 </Badge>
             )}
 

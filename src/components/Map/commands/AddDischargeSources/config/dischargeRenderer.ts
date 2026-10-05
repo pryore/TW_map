@@ -126,11 +126,11 @@ const sizeVariable = new SizeVariable({
 });
 
 const delayMappingArcade = `
-  var loc = Lower($feature.LocationName);
+  var loc = Replace(Replace(Lower($feature.LocationName), " ", ""), "-", "");
   if (IsEmpty(loc)) return 0;
   ${windrushData
     .filter((d) => (d.Delay_length || 0) > 0)
-    .map((d) => `if (Find("${String(d.STW).toLowerCase()}", loc) > -1) return ${d.Delay_length};`)
+    .map((d) => `if (Find("${String(d.STW).toLowerCase().replace(/[-\s]/g, '')}", loc) > -1) return ${d.Delay_length};`)
     .join('\n  ')}
   return 0;
 `;
@@ -148,12 +148,12 @@ const delaySizeVariable = new SizeVariable({
 });
 
 const urgentMappingArcade = `
-  var loc = Lower($feature.LocationName);
+  var loc = Replace(Replace(Lower($feature.LocationName), " ", ""), "-", "");
   var isUrgent = false;
   if (!IsEmpty(loc)) {
     ${windrushData
       .filter((d) => d.Revised_date == 2025 || d.Revised_date == 2026)
-      .map((d) => `if (Find("${String(d.STW).toLowerCase()}", loc) > -1) isUrgent = true;`)
+      .map((d) => `if (Find("${String(d.STW).toLowerCase().replace(/[-\s]/g, '')}", loc) > -1) isUrgent = true;`)
       .join('\n    ')}
   }
   

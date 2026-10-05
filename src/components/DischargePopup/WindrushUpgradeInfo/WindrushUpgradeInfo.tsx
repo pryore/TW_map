@@ -69,7 +69,7 @@ export function WindrushUpgradeInfo({ company, locationName }: WindrushUpgradeIn
                 </Box>
             </Flex>
 
-            {upgradeRecord.Status?.includes('Delay') && (
+            {delayLength > 0 && (
                 <Badge color="red" variant="soft" mt="1" style={{ alignSelf: 'flex-start' }}>
                     Delayed by {delayLength} years
                 </Badge>
